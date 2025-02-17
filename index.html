@@ -39,13 +39,14 @@
         .button {
             background-color: red;
             color: white;
-            padding: 10px;
+            padding: 12px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             margin: 10px;
             width: auto;
-            min-width: 80px;
+            min-width: 100px;
+            font-size: 16px;
         }
         .hidden {
             display: none;
@@ -66,6 +67,37 @@
                 opacity: 0;
             }
         }
+        
+        /* Fireworks Animation */
+        .firework {
+            position: absolute;
+            font-size: 30px;
+            animation: explode 1s ease-out forwards;
+            z-index: 20;  /* Ensure it's on top of the card */
+        }
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .card {
+                max-width: 90%;
+                padding: 15px;
+            }
+            .button {
+                padding: 10px 15px;
+                font-size: 14px;
+                min-width: 90px;
+            }
+            .heart {
+                font-size: 40px;
+            }
+            .message, .hidden-message {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -78,7 +110,7 @@
     <div class="card hidden" id="letterCard">
         <div class="heart">❤️</div>
         <p class="hidden-message" id="loveMessage"></p>
-        <p class="hidden-message">Happy Valentine's Day Adiii! You are the best gift I've ever had and the gift that I don't want to lose. If you feel sometimes that I don't love you, you are wrong, I always love you and forever will. I love you most my Adii ❤️</p>
+        <p class="hidden-message">Happy Valentine's Day Adiii! You are the best gift I've ever had and the gift that I don't want to lose. If you feel sometimes that I don't love you, you are wrong, I always love you and forever will. I love you most my Adiii!! ❤️</p>
     </div>
     
     <script>
@@ -86,6 +118,7 @@
             document.getElementById('questionCard').classList.add('hidden');
             document.getElementById('letterCard').classList.remove('hidden');
             document.getElementById('loveMessage').textContent = loves ? "Yay! I love you too! 💕" : "I don't care, I love you anyway! 💖";
+            createFireworks();
         }
         
         function createHearts() {
@@ -102,6 +135,22 @@
                     heart.remove();
                 }, 5000);
             }, 500);
+        }
+        
+        function createFireworks() {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    let firework = document.createElement("div");
+                    firework.classList.add("firework");
+                    firework.innerHTML = "💜";  
+                    firework.style.left = Math.random() * 100 + "vw";
+                    firework.style.top = Math.random() * 100 + "vh";
+                    document.body.appendChild(firework);
+                    setTimeout(() => {
+                        firework.remove();
+                    }, 1000);
+                }, i * 100);
+            }
         }
         
         createHearts();
